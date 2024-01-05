@@ -90,16 +90,17 @@ b12_2023 <-
   cbd_torvik_game_factors(year = "2023", conf = "B12") #%>%
 
 home_away <- b12_2023 %>%
-  select(team, result, opp_conf,loc, type, adj_o, adj_d, game_score,opp_conf)
+  select(team, result, opp_conf,loc, type, adj_o, adj_d, game_score,opp_conf, date) %>%
+  mutate(total_adj = adj_o - adj_d) #bigger dif is better
 
 wanted_teams <- c("Kansas", "Texas", "Okalhoma", "Baylor")
 
 home_away %>%
-  filter(team == "Kansas" | team == "Texas" | team == "Baylor" & type == "conf") %>%
-  ggplot(aes(adj_o, adj_d, team = team, color = loc)) +
+  filter(team == "Kansas" | team == "Texas" | team == "Baylor") %>%
+  ggplot(aes(date, total_adj, team = team, color =type)) +
   geom_point() +
-  geom_mean_lines(aes(x0 = adj_o, y0 = adj_d))+
-  geom_smooth() +
+  # geom_mean_lines(aes(x0 = adj_o, y0 = adj_d))+
+  geom_line() +
   facet_wrap(~team) +
   theme_minimal() +
   theme(strip.text.x = element_cbb_teams(size = 1))
