@@ -16,7 +16,7 @@ cbbdata::cbd_login()
 #messing around in cbbdata
 
 #kenpom authorization
-cbbdata::cbd_kenpom_authorization(password = "Range4eva180!")
+cbbdata::cbd_kenpom_authorization(password = "insert pass")
 
 colnames(cbd_torvik_team_factors(year = 2024))
 
