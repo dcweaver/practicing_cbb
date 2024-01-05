@@ -97,13 +97,17 @@ wanted_teams <- c("Kansas", "Texas", "Okalhoma", "Baylor")
 
 home_away %>%
   filter(team == "Kansas" | team == "Texas" | team == "Baylor") %>%
-  ggplot(aes(date, total_adj, team = team, color =type)) +
+  ggplot(aes(date, total_adj, team = team, color =loc)) +
   geom_point() +
   # geom_mean_lines(aes(x0 = adj_o, y0 = adj_d))+
   geom_line() +
   facet_wrap(~team) +
   theme_minimal() +
-  theme(strip.text.x = element_cbb_teams(size = 1))
+  theme(plot.title.position = "plot",
+        plot.title = element_text(face = "bold"),
+        strip.text.x = element_cbb_teams(size = 1)) +
+  labs(title = "Total adjusted rating(offense - defense) by location",
+       xlab)
   # geom_cbb_teams(width = 0.1)
 
 help(match)
