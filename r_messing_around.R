@@ -16,7 +16,7 @@ cbbdata::cbd_login()
 #messing around in cbbdata
 
 #kenpom authorization
-cbbdata::cbd_kenpom_authorization(password = "insert pass")
+cbbdata::cbd_kenpom_authorization(password = "password")
 
 colnames(cbd_torvik_team_factors(year = 2024))
 
@@ -61,7 +61,7 @@ texas_2024 <- texas_2024 %>%
 q <- texas_2024 %>% 
   ggplot(aes())
   
-  
+q
 #NCAA Tourney history for Texas 
 #cbbdata::cbd_torvik_ncaa_results(min_year = 2015, max_year = 2023, type = "team") %>%
   #dplyr::filter(team == "Texas")

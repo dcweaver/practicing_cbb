@@ -13,7 +13,7 @@ library(here)
 #######################################################################################
 #load in data
 all_conf <- cbd_torvik_conf_factors(year = 2024) %>%
-  slice(1:10)
+  slice(1:18)
 
 facet_data <- cbbdata::cbd_torvik_ratings_archive(year = 2024) %>% 
   summarize(avg_rating = mean(barthag), .by = c(conf, date)) %>%
@@ -49,12 +49,12 @@ ggsave(filename = here("GitHub/practicing_cbb/images","b12_adjusted_efficiency.p
 
 all_conf %>%
   ggplot(aes(adj_o, adj_d, conference = conf)) +
-  geom_cbb_conferences(width = 0.12) +
+  geom_cbb_conferences(width = 0.12, logo_type = "wordmark") +
   geom_mean_lines(aes(x0 = adj_o, y0 = adj_d), color = "black") +
   theme_minimal() +
   theme(plot.title.position = "plot",
         plot.title = element_text(face = "bold")) +
-  labs(title = "Adjusted Offensive + Defensive Efficiency across Conf",
+  labs(title = "Adjusted Offensive + Defensive Efficiency across Conferences",
        x = "Adjusted Offense",
        y = "Adjusted Defense")
 
@@ -104,10 +104,24 @@ home_away %>%
   facet_wrap(~team) +
   theme_minimal() +
   theme(plot.title.position = "plot",
-        plot.title = element_text(face = "bold"),
-        strip.text.x = element_cbb_teams(size = 1)) +
+        plot.title = element_text(face = "bold"))+
+        # strip.text.x = element_cbb_teams(size = 1)) +
   labs(title = "Total adjusted rating(offense - defense) by location",
        xlab)
   # geom_cbb_teams(width = 0.1)
 
 help(match)
+
+
+#############################
+#Create df of historical texas team data from 2000-2023
+
+texas_history <- cbd_torvik_team_history(team = "Texas")
+
+texas_history <- texas_history[-c(1),] #remove 2024 season, incomplete
+texas_history %>% mutate(adj_net = adj_o - adj_d) %>%
+  group_by(coach) %>%
+  ggplot(aes(year,adj_o, color = coach, shape = coach)) +
+  geom_point() +
+  stat_ellipse()+
+  theme_minimal()
